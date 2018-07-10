@@ -24,27 +24,27 @@ DROP TABLE IF EXISTS `gpu`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gpu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ip` varchar(64) NOT NULL,
-  `timestamp` varchar(64) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `pci.bus_id` varchar(64) NOT NULL,
-  `index` int(11) NOT NULL,
-  `fan.speed [%]` int(11) NOT NULL,
-  `power.draw [W]` int(11) NOT NULL,
-  `driver_version` int(11) NOT NULL,
-  `pstate` varchar(64) NOT NULL,
-  `pcie.link.gen.max` int(11) NOT NULL,
-  `pcie.link.gen.current` int(11) NOT NULL,
-  `pcie.link.width.current` int(11) NOT NULL,
-  `pcie.link.width.max` int(11) NOT NULL,
-  `temperature.gpu` int(11) NOT NULL,
-  `utilization.gpu [%]` int(11) NOT NULL,
-  `utilization.memory [%]` int(11) NOT NULL,
-  `memory.total [MiB]` int(11) NOT NULL,
-  `memory.free [MiB]` int(11) NOT NULL,
-  `memory.used [MiB]` int(11) NOT NULL,
+  `ip` varchar(64) DEFAULT NULL,
+  `timestamp` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `pci.bus_id` varchar(64) DEFAULT NULL,
+  `index` int(11) DEFAULT NULL,
+  `fan.speed [%]` int(11) DEFAULT NULL,
+  `power.draw [W]` int(11) DEFAULT NULL,
+  `driver_version` int(11) DEFAULT NULL,
+  `pstate` varchar(64) DEFAULT NULL,
+  `pcie.link.gen.max` int(11) DEFAULT NULL,
+  `pcie.link.gen.current` int(11) DEFAULT NULL,
+  `pcie.link.width.current` int(11) DEFAULT NULL,
+  `pcie.link.width.max` int(11) DEFAULT NULL,
+  `temperature.gpu` int(11) DEFAULT NULL,
+  `utilization.gpu [%]` int(11) DEFAULT NULL,
+  `utilization.memory [%]` int(11) DEFAULT NULL,
+  `memory.total [MiB]` int(11) DEFAULT NULL,
+  `memory.free [MiB]` int(11) DEFAULT NULL,
+  `memory.used [MiB]` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +56,4 @@ CREATE TABLE `gpu` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-10  4:15:14
+-- Dump completed on 2018-07-10  5:17:02

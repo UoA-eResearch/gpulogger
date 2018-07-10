@@ -9,6 +9,15 @@ application = Bottle()
 plugin = bottle_mysql.Plugin(dbuser=config.user, dbpass=config.password, dbname='gpu')
 application.install(plugin)
 
+def ensure_number(s):
+  if s == "[Not Supported]":
+    return None
+  try:
+    float(s)
+    return s
+  except ValueError:
+    return None
+
 @application.post('/')
 def post(db):
     print(request.body)
@@ -41,20 +50,20 @@ def post(db):
         row["timestamp"],
         row["name"],
         row["pci.bus_id"],
-        row["index"],
-        row["fan.speed [%]"],
-        row["power.draw [W]"],
-        row["driver_version"],
+        ensure_number(row["index"]),
+        ensure_number(row["fan.speed [%]"]),
+        ensure_number(row["power.draw [W]"]),
+        ensure_number(row["driver_version"]),
         row["pstate"],
-        row["pcie.link.gen.max"],
-        row["pcie.link.gen.current"],
-        row["pcie.link.width.current"],
-        row["pcie.link.width.max"],
-        row["temperature.gpu"],
-        row["utilization.gpu [%]"],
-        row["utilization.memory [%]"],
-        row["memory.total [MiB]"],
-        row["memory.free [MiB]"],
-        row["memory.used [MiB]"],
+        ensure_number(row["pcie.link.gen.max"]),
+        ensure_number(row["pcie.link.gen.current"]),
+        ensure_number(row["pcie.link.width.current"]),
+        ensure_number(row["pcie.link.width.max"]),
+        ensure_number(row["temperature.gpu"]),
+        ensure_number(row["utilization.gpu [%]"]),
+        ensure_number(row["utilization.memory [%]"]),
+        ensure_number(row["memory.total [MiB]"]),
+        ensure_number(row["memory.free [MiB]"]),
+        ensure_number(row["memory.used [MiB]"]),
       ))
     return "OK!"
