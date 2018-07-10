@@ -1,6 +1,14 @@
 # gpulogger
 Simple bash script to post output of nvidia-smi to a server, and a simple python bottle mysql application to recieve and store that data
 
+## Requirements
+
+nvidia-smi  
+curl  
+
 ## Installation
 
-`curl https://raw.githubusercontent.com/UoA-eResearch/gpulogger/master/add_to_cron.sh | bash`
+If necessary:  
+`sudo apt-get install nvidia-smi curl`  
+
+`curl https://raw.githubusercontent.com/UoA-eResearch/gpulogger/master/add_to_cron.sh | bash`  
