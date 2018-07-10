@@ -21,7 +21,7 @@ def ensure_number(s):
 @application.post('/')
 def post(db):
     print(request.body)
-    ip = request.environ.get('HTTP_X_FORWARDED_FOR') or request.environ.get('REMOTE_ADDR')
+    ip = request.environ.get('REMOTE_ADDR')
     reader = csv.DictReader(request.body, skipinitialspace=True)
     for row in reader:
       print(row)
