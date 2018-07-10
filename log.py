@@ -57,3 +57,4 @@ def post(db):
         row["memory.free [MiB]"],
         row["memory.used [MiB]"],
       ))
+    return "OK!"
