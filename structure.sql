@@ -16,6 +16,24 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Temporary table structure for view `active_hours`
+--
+
+DROP TABLE IF EXISTS `active_hours`;
+/*!50001 DROP VIEW IF EXISTS `active_hours`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `active_hours` AS SELECT 
+ 1 AS `ip`,
+ 1 AS `day`,
+ 1 AS `active_hours`,
+ 1 AS `fraction_of_day`,
+ 1 AS `MIN(``utilization.gpu [%]``)`,
+ 1 AS `MAX(``utilization.gpu [%]``)`,
+ 1 AS `AVG(``utilization.gpu [%]``)`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `gpu`
 --
 
@@ -44,9 +62,64 @@ CREATE TABLE `gpu` (
   `memory.free [MiB]` int(11) DEFAULT NULL,
   `memory.used [MiB]` int(11) DEFAULT NULL,
   `insertedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29217 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  KEY `ip` (`ip`),
+  KEY `insertedAt` (`insertedAt`)
+) ENGINE=InnoDB AUTO_INCREMENT=852878 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `test_active_hours`
+--
+
+DROP TABLE IF EXISTS `test_active_hours`;
+/*!50001 DROP VIEW IF EXISTS `test_active_hours`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `test_active_hours` AS SELECT 
+ 1 AS `ip`,
+ 1 AS `day`,
+ 1 AS `time`,
+ 1 AS `dow`,
+ 1 AS `utilization.gpu [%]`,
+ 1 AS `utilization.memory [%]`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `active_hours`
+--
+
+/*!50001 DROP VIEW IF EXISTS `active_hours`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`gpu`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `active_hours` AS select `gpu`.`ip` AS `ip`,cast(`gpu`.`insertedAt` as date) AS `day`,(count(0) / 60) AS `active_hours`,((count(0) / 60) / 24) AS `fraction_of_day`,min(`gpu`.`utilization.gpu [%]`) AS `MIN(``utilization.gpu [%]``)`,max(`gpu`.`utilization.gpu [%]`) AS `MAX(``utilization.gpu [%]``)`,avg(`gpu`.`utilization.gpu [%]`) AS `AVG(``utilization.gpu [%]``)` from `gpu` where (`gpu`.`utilization.gpu [%]` > 0) group by `gpu`.`ip`,`day` order by `day` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `test_active_hours`
+--
+
+/*!50001 DROP VIEW IF EXISTS `test_active_hours`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`gpu`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `test_active_hours` AS select `gpu`.`ip` AS `ip`,cast(`gpu`.`insertedAt` as date) AS `day`,cast(`gpu`.`insertedAt` as time) AS `time`,dayname(cast(`gpu`.`insertedAt` as date)) AS `dow`,`gpu`.`utilization.gpu [%]` AS `utilization.gpu [%]`,`gpu`.`utilization.memory [%]` AS `utilization.memory [%]` from `gpu` where (`gpu`.`utilization.gpu [%]` > 0) order by cast(`gpu`.`insertedAt` as date),cast(`gpu`.`insertedAt` as time) desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -57,4 +130,4 @@ CREATE TABLE `gpu` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-16 11:00:10
+-- Dump completed on 2018-12-14 11:41:45
