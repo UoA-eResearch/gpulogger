@@ -25,7 +25,7 @@ def post(db):
     reader = csv.DictReader(request.body, skipinitialspace=True)
     for row in reader:
       print(row)
-      result = db.execute("""INSERT INTO gpu SET
+      result = db.execute("""INSERT INTO gpu_log SET
         `ip` = %s,
         `timestamp` = %s,
         `name` = %s,
