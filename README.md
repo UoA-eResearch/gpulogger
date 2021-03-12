@@ -1,5 +1,5 @@
 # gpulogger
-Simple bash script to post output of nvidia-smi to a server, and a simple python bottle mysql application to recieve and store that data
+Simple bash script (for Linux) and powershell script (for Windows) to post output of nvidia-smi to a server, and a simple python bottle mysql application to recieve and store that data
 
 ## Requirements
 
