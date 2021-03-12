@@ -10,7 +10,7 @@ plugin = bottle_mysql.Plugin(dbuser=config.user, dbpass=config.password, dbname=
 application.install(plugin)
 
 def ensure_number(s):
-  if s == "[Not Supported]":
+  if s == "[Not Supported]" or s == "[N/A]":
     return None
   try:
     float(s)
@@ -20,7 +20,7 @@ def ensure_number(s):
 
 @application.post('/')
 def post(db):
-    print(request.body)
+    print(request.body.getvalue())
     ip = request.environ.get('REMOTE_ADDR')
     reader = csv.DictReader(request.body, skipinitialspace=True)
     for row in reader:
