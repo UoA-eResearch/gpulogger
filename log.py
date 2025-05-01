@@ -1,6 +1,7 @@
-from bottle import Bottle, request
+from bottle import Bottle, request, run
 import bottle_mysql
 import csv
+import io
 import os
 import sys
 import config
@@ -22,7 +23,8 @@ def ensure_number(s):
 def post(db):
     print(request.body.getvalue())
     ip = request.environ.get('REMOTE_ADDR')
-    reader = csv.DictReader(request.body, skipinitialspace=True)
+    csv_file = io.TextIOWrapper(request.body, encoding='utf-8')
+    reader = csv.DictReader(csv_file, skipinitialspace=True)
     for row in reader:
       print(row)
       result = db.execute("""INSERT INTO gpu_log SET
@@ -67,3 +69,7 @@ def post(db):
         ensure_number(row["memory.used [MiB]"]),
       ))
     return "OK!"
+
+if __name__ == '__main__':
+    application.run(host='0.0.0.0', port=80, debug=False)
+
