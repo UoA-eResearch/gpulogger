@@ -1,0 +1,13 @@
+---
+version: "3"
+
+services:
+  logger:
+    build: .
+    container_name: gpu_logger
+    network_mode: host
+    volumes:
+      - /run/mysqld/mysqld.sock:/run/mysqld/mysqld.sock
+        #     ports:
+        #       - "80:80"
+    restart: unless-stopped
